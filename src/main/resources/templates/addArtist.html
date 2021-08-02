@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form action="" th:action="@{/addArtist/save}"
+      th:object="${addArtist}"
+      method="post"
+>
+  <fieldset>
+    <input type="submit" id="submitButton" th:value="Save">
+    <input type="reset" id="resetButton" name="reset" th:value="Reset">
+  </fieldset>
+
+  <table>
+
+    <tbody>
+    <tr>
+      <td> <input type="text" th:name="artFullName"/></td>
+      <td> <input type="text" th:name="role"/></td>
+    </tr>
+
+
+    </tbody>
+
+  </table>
+
+
+
+
+
+</form>
+</body>
+</html>

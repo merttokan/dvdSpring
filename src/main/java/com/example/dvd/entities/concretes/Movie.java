@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Data
@@ -35,6 +36,9 @@ public class Movie{
 
     @Column(name = "languages")
     private String languages;
+
+    @ManyToMany(mappedBy = "playedMovies")
+    Set<Artist> casts;
 
     public Movie(String title, String releaseDate, String genre, String description, String media, String languages) {
         this.title = title;
