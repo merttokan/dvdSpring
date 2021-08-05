@@ -51,4 +51,12 @@ public class Artist {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public int getArtId() {
+        return artId;
+    }
+
+    public void setArtId(int artId) {
+        this.artId = artId;
+    }
 }

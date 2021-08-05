@@ -5,32 +5,39 @@
   <title>Title</title>
 </head>
 <body>
-<form action="" th:action="@{/addArtist/save}"
-      th:object="${addArtist}"
-      method="post"
->
-  <fieldset>
-    <input type="submit" id="submitButton" th:value="Save">
-    <input type="reset" id="resetButton" name="reset" th:value="Reset">
-  </fieldset>
+<div>
+  <form action="" th:action="@{/addArtist}"
+        th:object="${addArtist}"
+        method="post"
+  >
+    <fieldset>
+      <input type="submit" id="submitButton" th:value="Save">
+      <input type="reset" id="resetButton" name="reset" th:value="Reset">
+    </fieldset>
+    <input type="hidden" th:name="artId" th:value="${addArtist.artId}">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Full Name</th>
+        <th scope="col">Role</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td> <input type="text" th:name="artFullName" th:value="${addArtist.artFullName}"/></td>
+        <td> <input type="text" th:name="role" th:value="${addArtist.role}"/></td>
 
-  <table>
+      </tr>
+      </tbody>
 
-    <tbody>
-    <tr>
-      <td> <input type="text" th:name="artFullName"/></td>
-      <td> <input type="text" th:name="role"/></td>
-    </tr>
+    </table>
+  </form>
 
+</div>
+<script>
 
-    </tbody>
-
-  </table>
+</script>
 
 
-
-
-
-</form>
 </body>
 </html>

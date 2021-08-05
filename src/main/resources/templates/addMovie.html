@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+<form action="" th:action="@{/addMovie}"
+th:object="${adder}"
+      method="post"
+>
+<fieldset>
+  <input type="submit" id="submitButton" th:value="Save">
+  <input type="reset" id="resetButton" name="reset" th:value="Reset">
+</fieldset>
+    <input type="hidden" th:name="id" th:value="${adder.id}">
+    <table>
+        <tbody>
+        <tr>
+            <td> <input type="text" th:name="title" th:value="${adder.title}"/></td>
+            <td> <input type="text" th:name="releaseDate" th:value="${adder.releaseDate}"/></td>
+            <td> <input type="text" th:name="genre" th:value="${adder.genre}"/></td>
+            <td> <input type="text" th:name="description" th:value="${adder.description}"/></td>
+            <td> <input type="text" th:name="media" th:value="${adder.media}"/></td>
+            <td> <input type="text" th:name="languages" th:value="${adder.languages}"/></td>
+        </tr>
+        </tbody>
+
+    </table>
+</form>
+</div>
+
+
+
+</body>
+</html>

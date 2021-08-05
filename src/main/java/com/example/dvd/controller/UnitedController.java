@@ -28,46 +28,72 @@ public class UnitedController {
     @GetMapping("/movies")
     private String moviesList(Model model) {
        model.addAttribute("movies",movieService.listAllMovies());
-       return "index";
+       return "movies";
+    }
+    @RequestMapping(value = "/deleteMovie/{id}",method = RequestMethod.GET)
+    private String deleteMovie(@PathVariable String id){
+        movieService.deleteMovie(Integer.parseInt(id));
+        return "redirect:/movies";
     }
 
-    @RequestMapping("/add")
-    private String addMovie(
+    @RequestMapping(value = "/addMovie/{id}",method = RequestMethod.GET)
+    private String addMovie(@PathVariable(required = false) String id,
                             Model model
                             ) {
         Movie movie = new Movie();
+        if(id != null){
+            movie = movieService.getMovieById(Integer.parseInt(id));
+        }
 
-        model.addAttribute("adder", movie);
+        model.addAttribute("adder", movieService.addMovie(movie));
 
-        return "adder";
+        return "addMovie";
     }
-    @PostMapping("/add/save")
+    @RequestMapping("/addMovie")
     public String saveMovies(@ModelAttribute Movie movie,Model model){
         model.addAttribute("adder", this.movieService.addMovie(movie));
 
-        return "redirect:/add";
+        return "/addMovie";
     }
+  /*  @GetMapping("/addMovie/{id}")
+    private String editMovie(@RequestParam int id, Model model){
+        model.addAttribute("movieId",movieService.editMovie(id));
+
+        return "addMovie";
+    }*/
     @GetMapping("/artists")
     private String artistsList(Model model){
         model.addAttribute("artists",artistService.listAllArtists());
-        return "indexx";
+        return "artists";
     }
-    @RequestMapping("/addArtist")
-    private String addArtist(
-            Model model
+
+    @RequestMapping(value = "/addArtist/{id}",method = RequestMethod.GET)
+    private String addArtist(@PathVariable(required = false) String id,
+                            Model model
     ) {
         Artist artist = new Artist();
+        if(id != null){
+            artist = artistService.getArtistById(Integer.parseInt(id));
+        }
 
-        model.addAttribute("addArtist", artist);
+        model.addAttribute("addArtist", artistService.addArtist(artist));
 
         return "addArtist";
     }
-    @PostMapping("/addArtist/save")
-    public String saveArtists(@ModelAttribute Artist artist,Model model){
-        model.addAttribute("addArtist", this.artistService.addArtist(artist));
 
-        return "redirect:/addArtist";
+  @RequestMapping("/addArtist")
+  public String saveArtists(@ModelAttribute Artist artist,Model model){
+      model.addAttribute("addArtist", this.artistService.addArtist(artist));
+
+      return "/addArtist";
+  }
+
+    @RequestMapping(value = "/deleteArtist/{id}",method = RequestMethod.GET)
+    private String deleteArtist(@PathVariable String id){
+        artistService.deleteArtist(Integer.parseInt(id));
+        return "redirect:/artists";
     }
+
 
 
 

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class = "container">
+    <h3 style="font-family: 'Berlin Sans FB';text-align: center">Enter a keyword of a movie to search</h3>
+    <br>
+    <input class="form-control"  id="searcher" type="text" placeholder="e.g. The Wolf of Wall Street">
+    <br>
+    <div  style="margin-bottom: 20px">
+
+
+
+       <a href="/artists" class="btn btn-primary" >Artists</a>
+       <a href="/addMovie" class="btn btn-primary" >Add Movie</a>
+
+
+
+
+
+    </div>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col"> ID </th>
+        <th scope="col"> Title </th>
+        <th scope="col"> Release Year </th>
+        <th scope="col"> Genre </th>
+        <th scope="col"> Description </th>
+        <th scope="col"> Media </th>
+        <th scope="col"> Languages </th>
+
+    </tr>
+    </thead>
+    <tbody id="filteredTable">
+
+    <tr th:each="movie : ${movies}">
+        <th scope="row" class="movieID"><span th:text="${movie.id}"> ID </span></th>
+        <td><span th:text="${movie.title}"> Title </span></td>
+        <td><span th:text="${movie.releaseDate}"> Release Year </span></td>
+        <td><span th:text="${movie.genre}"> Genre </span></td>
+        <td><span th:text="${movie.description}"> Description </span></td>
+        <td><span th:text="${movie.media}"> Media </span></td>
+        <td><span th:text="${movie.languages}"> Languages Available </span></td>
+        <td><a th:href="@{'/addMovie/' + ${movie.id}}">Edit</a></td>
+        <td>
+            <a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${movie.id}"><span class="glyphicon glyphicon-trash"></span></a>
+        </td>
+        <div class="modal modal-warning fade in" th:id="modal-warning+${movie.id}" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                        <h5 class="modal-title">Delete Movie</h5>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Are you sure want to delete this movie?
+                            <br>
+                        It cannot be undone</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                        <a type="button" class="btn btn-outline" th:href="@{/deleteMovie/{id}(id=${movie.id})}"><i class="fa fa-check"></i>&nbsp;Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </tr>
+
+    </tbody>
+</table>
+
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#searcher").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#filteredTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+
+   /* $(".deleteMovie").click(function (){
+        var id = $(this).closest("tr").find(".movieID").text();
+        $("#selectedMovieId").val(id);
+        $("#myModal").modal('show');
+
+    })*/
+        /*$("#deleteMovie").click(function (){
+            var id =  $("#selectedMovieId").val();
+
+            $("#myModal").modal('show');
+
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/deleteMovie/"+id,
+
+                dataType: 'json',
+
+                success: function (data) {
+                    alert("Movie had been deleted")
+
+                },
+                error: function (e) {
+
+                    var json = "Ajax Hata"
+                        + e.responseText;
+                    $('#feedback').html(json);
+
+
+                }
+            });
+        })*/
+    });
+
+</script>
+<script>
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

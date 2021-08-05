@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class = "container">
+  <h3 style="font-family: 'Berlin Sans FB';text-align: center">Enter a keyword of an Artist to search</h3>
+  <br>
+  <input class="form-control"  id="searcher" type="text" placeholder="e.g. Leonardo Di Caprio">
+  <br>
+  <div  style="margin-bottom: 20px">
+
+
+
+    <a href="/movies" class="btn btn-primary" >Movies</a>
+    <a href="/addArtist" class="btn btn-primary" >Add Artist</a>
+
+
+
+
+
+  </div>
+
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col"> ID </th>
+      <th scope="col"> Full Name </th>
+      <th scope="col"> Role </th>
+      <th scope="col"> Movies Played </th>
+
+
+    </tr>
+    </thead>
+    <tbody id="filteredTable">
+
+    <tr th:each="artist : ${artists}">
+      <th scope="row" class="movieID"><span th:text="${artist.artId}"> ID </span></th>
+      <td><span th:text="${artist.artFullName}"> Full Name </span></td>
+      <td><span th:text="${artist.role}"> Role </span></td>
+      <td><span th:text="${artist.playedMovies}"> Movies Played </span></td>
+
+      <td><a th:href="@{'/addArtist/' + ${artist.artId}}">Edit</a></td>
+      <td>
+        <a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${artist.artId}"><span class="glyphicon glyphicon-trash"></span></a>
+      </td>
+      <div class="modal modal-warning fade in" th:id="modal-warning+${artist.artId}" >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h5 class="modal-title">Delete Movie</h5>
+            </div>
+            <div class="modal-body">
+              <h3>Are you sure want to delete this movie?
+                <br>
+                It cannot be undone</h3>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+              <a type="button" class="btn btn-outline" th:href="@{/deleteArtist/{id}(id=${artist.artId})}"><i class="fa fa-check"></i>&nbsp;Yes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#searcher").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#filteredTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+
+
+
+  });
+
+</script>
+<script>
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
