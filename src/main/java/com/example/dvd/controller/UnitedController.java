@@ -94,6 +94,11 @@ public class UnitedController {
         return "redirect:/artists";
     }
 
+    @GetMapping("/")
+    private String mainPage(){
+        return "index";
+    }
+
 
 
 
